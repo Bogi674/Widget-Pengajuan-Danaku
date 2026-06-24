@@ -1,0 +1,141 @@
+<!-- =========================================================
+     ACC ONE - Form Pengajuan ACC Danaku (Customer Side) - v3
+     Copy SELURUH blok ini, paste ke RTE artikel (mode Source Code / HTML).
+     - Tanpa <script> load-time (dropdown tetap terisi via innerHTML).
+     - Perbaikan keyboard Android: user-select:text + touch-action + font 16px.
+========================================================= -->
+<div id="accLeadForm">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap');
+    #accLeadForm{max-width:560px;margin:24px auto;font-family:'Source Sans Pro','Source Sans 3',"Segoe UI",Roboto,Arial,sans-serif;color:#1b2436;line-height:1.5;-webkit-text-size-adjust:100%;-webkit-user-select:text;user-select:text}
+    #accLeadForm *{box-sizing:border-box}
+    #accLeadForm .alf-card{border:1px solid #d8dde6;border-radius:14px;overflow:hidden;box-shadow:0 12px 34px rgba(12,24,56,.10);background:#fff}
+    #accLeadForm .alf-head{background:linear-gradient(135deg,#2f63c0,#0c1838);color:#fff;padding:22px 24px}
+    #accLeadForm .alf-head h3{margin:0 0 6px;font-size:21px;font-weight:800;letter-spacing:.2px;color:#fff}
+    #accLeadForm .alf-head p{margin:0;font-size:13.5px;color:#fff;opacity:.92;line-height:1.55}
+    #accLeadForm .alf-body{padding:20px 24px 24px;background:#fbfcfe}
+    #accLeadForm .alf-f{margin-bottom:15px}
+    #accLeadForm .alf-f>label{display:block;font-size:12.5px;font-weight:700;color:#0c1838;margin-bottom:6px}
+    #accLeadForm .alf-req{color:#c22828;margin-left:2px}
+    #accLeadForm input,#accLeadForm select{width:100%;font:inherit;font-size:16px;color:#1b2436;background:#fff;border:1px solid #d2d8e2;border-radius:9px;padding:12px;outline:none;transition:.15s;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default;touch-action:manipulation;-webkit-appearance:none;appearance:none}
+    #accLeadForm input::placeholder{color:#9aa3b2}
+    #accLeadForm input:focus,#accLeadForm select:focus{border-color:#2f63c0;box-shadow:0 0 0 3px rgba(47,99,192,.14)}
+    #accLeadForm select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235b667a' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+    #accLeadForm select:disabled{background-color:#f1f3f8;color:#9aa3b2;cursor:not-allowed}
+    #accLeadForm .alf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    #accLeadForm .alf-mini{display:block;font-size:11px;font-weight:600;color:#5b667a;margin-bottom:5px}
+    #accLeadForm .alf-note{font-size:11px;color:#8a93a4;margin-top:5px}
+    #accLeadForm .alf-consent{display:flex;align-items:flex-start;gap:10px;margin:6px 0 16px;font-size:12px;color:#3a4253;line-height:1.5}
+    #accLeadForm .alf-consent input{width:18px;height:18px;min-width:18px;margin-top:1px;accent-color:#2f63c0;cursor:pointer}
+    #accLeadForm .alf-consent a{color:#2f63c0;text-decoration:underline}
+    #accLeadForm .alf-btn{width:100%;border:0;border-radius:11px;background:#25d366;color:#fff;font:inherit;font-weight:800;font-size:15.5px;padding:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:.15s;letter-spacing:.2px}
+    #accLeadForm .alf-btn:hover{background:#1ebe5a}
+    #accLeadForm .alf-btn:disabled{background:#cfd6e0;cursor:not-allowed;opacity:.85}
+    #accLeadForm .alf-err{display:none;background:#fdecec;border:1px solid #f3c2c2;color:#a31f1f;font-size:12px;font-weight:600;border-radius:8px;padding:10px 12px;margin-bottom:12px}
+    #accLeadForm .alf-foot{text-align:center;font-size:11px;color:#8a93a4;margin-top:11px}
+    @media(max-width:480px){#accLeadForm .alf-grid{grid-template-columns:1fr}}
+  </style>
+
+  <div class="alf-card">
+    <div class="alf-head">
+      <h3>Form Pengajuan ACC Danaku</h3>
+      <p>Isi data berikut dan tim ACC ONE akan menghubungi Anda melalui WhatsApp untuk proses pengajuan.</p>
+    </div>
+    <div class="alf-body">
+
+      <div class="alf-err" id="alfErr">Mohon lengkapi seluruh data dan setujui Kebijakan Privasi terlebih dahulu.</div>
+
+      <div class="alf-f">
+        <label>Nama Lengkap<span class="alf-req">*</span></label>
+        <input type="text" id="alfNama" placeholder="Tulis nama lengkap Anda">
+      </div>
+
+      <div class="alf-f">
+        <label>Nomor HP<span class="alf-req">*</span></label>
+        <input type="tel" id="alfHp" inputmode="numeric" placeholder="08xxxxxxxxxx">
+      </div>
+
+      <div class="alf-f">
+        <label>Besar Pencairan yang Diinginkan<span class="alf-req">*</span></label>
+        <input type="text" id="alfDana" inputmode="numeric" placeholder="Rp 0" oninput="var v=this.value.replace(/[^0-9]/g,'');this.value=v?'Rp '+Number(v).toLocaleString('id-ID'):'';">
+      </div>
+
+      <div class="alf-f">
+        <label>Kendaraan yang Dimiliki<span class="alf-req">*</span></label>
+        <div class="alf-grid">
+          <div>
+            <span class="alf-mini">Brand</span>
+            <select id="alfBrand" data-btm='{"Daihatsu":["Ayla","Gran Max","Hi-Max","Luxio","Rocky","Sigra","Sirion","Terios","Xenia"],"Honda":["Accord","BR-V","Brio","City","City Hatchback","Civic","Civic Type R","CR-V","HR-V","Jazz","Mobilio","WR-V"],"Hyundai":["Creta","H-1","Ioniq","Ioniq 5","Ioniq 6","Kona Electric","Palisade","Santa Fe","Stargazer","Stargazer X","Staria"],"Isuzu":["D-Max","Elf","Giga","MU-X","Panther","Traga"],"Mazda":["BT-50","CX-3","CX-30","CX-5","CX-60","CX-8","CX-9","Mazda2","Mazda3","Mazda6","MX-5"],"Mitsubishi":["Eclipse Cross","L300","Mirage","Outlander PHEV","Pajero Sport","Triton","Xpander","Xpander Cross"],"Nissan":["Grand Livina","GT-R","Kicks e-Power","Leaf","Livina","Magnite","March","Navara","Serena","Terra","X-Trail"],"Suzuki":["APV","Baleno","Carry","Ertiga","Grand Vitara","Ignis","Jimny","Karimun Wagon R","S-Presso","SX4 S-Cross","XL7"],"Toyota":["Agya","Alphard","Avanza","bZ4X","Calya","Camry","C-HR","Corolla Altis","Corolla Cross","Fortuner","GR 86","GR Supra","GR Yaris","Hiace","Hilux","Innova Venturer","Innova Zenix","Kijang Innova","Land Cruiser","Land Cruiser Prado","Raize","Rush","Sienta","Veloz","Vellfire","Vios","Voxy","Yaris","Yaris Cross"],"Wuling":["Air ev","Almaz","Almaz RS","Alvez","BinguoEV","Confero","Cortez","Formo","Formo Max"]}' onchange="var d=JSON.parse(this.getAttribute('data-btm'));var m=document.getElementById('alfModel');m.innerHTML='';var p=document.createElement('option');p.value='';p.text='Pilih Model';m.appendChild(p);var a=d[this.value]||[];for(var i=0;i<a.length;i++){var o=document.createElement('option');o.value=a[i];o.text=a[i];m.appendChild(o);}m.disabled=this.value?false:true;">
+        <option value="">Pilih Brand</option>
+        <option>Daihatsu</option>
+        <option>Honda</option>
+        <option>Hyundai</option>
+        <option>Isuzu</option>
+        <option>Mazda</option>
+        <option>Mitsubishi</option>
+        <option>Nissan</option>
+        <option>Suzuki</option>
+        <option>Toyota</option>
+        <option>Wuling</option>
+            </select>
+          </div>
+          <div>
+            <span class="alf-mini">Model</span>
+            <select id="alfModel" disabled><option value="">Pilih Model</option></select>
+          </div>
+          <div>
+            <span class="alf-mini">Tahun Kendaraan</span>
+            <select id="alfTahun">
+        <option value="">Pilih Tahun</option>
+        <option>2026</option>
+        <option>2025</option>
+        <option>2024</option>
+        <option>2023</option>
+        <option>2022</option>
+        <option>2021</option>
+        <option>2020</option>
+        <option>2019</option>
+        <option>2018</option>
+        <option>2017</option>
+        <option>2016</option>
+        <option>2015</option>
+        <option>2014</option>
+        <option>2013</option>
+        <option>2012</option>
+        <option>2011</option>
+        <option>2010</option>
+        <option>2009</option>
+        <option>2008</option>
+        <option>2007</option>
+        <option>2006</option>
+        <option>2005</option>
+        <option>2004</option>
+        <option>2003</option>
+        <option>2002</option>
+        <option>2001</option>
+        <option>2000</option>
+            </select>
+          </div>
+        </div>
+        <div class="alf-note">Sumber data: Master BTM ACC ONE</div>
+      </div>
+
+      <div class="alf-f">
+        <label>Wilayah Pengajuan<span class="alf-req">*</span></label>
+        <input type="text" id="alfWilayah" placeholder="contoh: Jakarta Selatan">
+      </div>
+
+      <label class="alf-consent">
+        <input type="checkbox" id="alfConsent" onchange="document.getElementById('alfBtn').disabled=!this.checked">
+        <span>Dengan mendaftar saya menyatakan telah membaca &amp; menyetujui atas pemrosesan data pribadi saya berdasarkan <a href="https://www.acc.co.id/kebijakan-website" target="_blank" rel="noopener"><b>Kebijakan Privasi</b></a></span>
+      </label>
+
+      <button type="button" class="alf-btn" id="alfBtn" disabled onclick="var g=function(i){return document.getElementById(i);};var nama=g('alfNama').value.trim(),hp=g('alfHp').value.trim(),dn=g('alfDana').value.trim();var b=g('alfBrand').value,md=g('alfModel').value,th=g('alfTahun').value,w=g('alfWilayah').value.trim();var c=g('alfConsent').checked,e=g('alfErr');if(!nama||!hp||!dn||!b||!md||!th||!w||!c){e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'center'});return;}e.style.display='none';var msg='Halo, Saya '+nama+' (No. HP: '+hp+'), ingin melakukan pengajuan pembiayaan di ACC sebesar '+dn+' dengan jaminan kendaraan saya '+b+' '+md+' '+th+'. Saat ini, saya berlokasi di '+w;window.open('https://wa.me/6281181337703?text='+encodeURIComponent(msg),'_blank');">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.7-.84-2-.94-.26-.1-.46-.15-.65.15-.2.3-.74.94-.9 1.13-.17.2-.34.22-.63.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.5.16-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.65-1.57-.9-2.15-.23-.56-.47-.48-.65-.49l-.55-.01c-.2 0-.5.07-.76.37-.26.3-1 .98-1 2.4 0 1.4 1.03 2.76 1.17 2.96.15.2 2.02 3.08 4.9 4.32.68.3 1.22.47 1.64.6.69.22 1.32.19 1.82.12.55-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.2-.55-.34zM12 2.04A9.94 9.94 0 0 0 2.06 12c0 1.76.46 3.42 1.27 4.86L2 22l5.27-1.3A9.9 9.9 0 0 0 12 21.96 9.94 9.94 0 0 0 21.94 12 9.94 9.94 0 0 0 12 2.04zm0 18.1a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.05.75.76-2.96-.2-.31A8.16 8.16 0 0 1 12 3.86 8.14 8.14 0 0 1 20.14 12 8.14 8.14 0 0 1 12 20.14z"/></svg>
+        WhatsApp Sekarang
+      </button>
+      <div class="alf-foot">Data Anda aman dan hanya digunakan untuk proses pengajuan pembiayaan.</div>
+
+    </div>
+  </div>
+</div>
